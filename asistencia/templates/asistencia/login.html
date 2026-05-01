@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Iniciar sesión - Control de Asistencia</title>
+  {% load static %}
+  <style>
+    :root{
+      --bg-1:#f8f2e8;
+      --bg-2:#ead8bc;
+      --bg-3:#d8b78e;
+      --card:#fffdf8;
+      --text:#2a1a13;
+      --muted:#6f5242;
+      --primary:#7b4a2f;
+      --primary-2:#5f3523;
+      --ring:rgba(123,74,47,.2);
+      --border:#dec7a9;
+      --shadow:0 20px 45px rgba(46,27,20,.18);
+      --shadow-soft:0 10px 26px rgba(46,27,20,.1);
+    }
+    *{ box-sizing:border-box; }
+    body{
+      margin:0;
+      font-family:"Segoe UI", "Inter", Arial, sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(900px 400px at 8% 0%, rgba(123,74,47,.18), transparent 60%),
+        radial-gradient(600px 260px at 95% 100%, rgba(91,53,38,.18), transparent 55%),
+        linear-gradient(160deg, var(--bg-2) 0%, var(--bg-1) 40%, #f9f3ea 100%);
+    }
+    .wrap{
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:24px 16px;
+    }
+    .card{
+      width:100%;
+      max-width:460px;
+      background:linear-gradient(180deg,#fffefb 0%, var(--card) 100%);
+      border:1px solid var(--border);
+      border-radius:20px;
+      box-shadow:var(--shadow);
+      padding:28px 24px 24px;
+      position:relative;
+      overflow:hidden;
+    }
+    .card::before{
+      content:"";
+      position:absolute;
+      inset:-1px -1px auto -1px;
+      height:6px;
+      background:linear-gradient(90deg, #b68458, #7b4a2f, #4a2b1d);
+    }
+    .logo-wrap{ display:flex; justify-content:center; margin-bottom:16px; }
+    .logo{
+      width:230px; max-width:100%; height:auto; border-radius:12px;
+      border:1px solid #cfae84; box-shadow:var(--shadow-soft); background:#fff;
+    }
+    h1{
+      margin:0 0 8px;
+      font-size:1.45rem;
+      line-height:1.2;
+      color:#3b2218;
+      text-align:center;
+      letter-spacing:.2px;
+    }
+    p{
+      margin:0 0 20px;
+      color:var(--muted);
+      text-align:center;
+      font-size:.95rem;
+    }
+    label{
+      display:block;
+      margin:10px 0 6px;
+      color:#5a3728;
+      font-size:.9rem;
+      font-weight:700;
+    }
+    input{
+      width:100%;
+      padding:.72rem .78rem;
+      border-radius:12px;
+      border:1px solid #cfb28e;
+      margin-bottom:8px;
+      background:#fff;
+      color:var(--text);
+      transition:border-color .2s, box-shadow .2s, transform .06s;
+    }
+    input:focus{
+      outline:none;
+      border-color:var(--primary);
+      box-shadow:0 0 0 4px var(--ring);
+    }
+    button{
+      width:100%;
+      margin-top:12px;
+      padding:.8rem;
+      border-radius:12px;
+      border:none;
+      background:linear-gradient(180deg,var(--primary),var(--primary-2));
+      color:#fff;
+      font-weight:700;
+      letter-spacing:.25px;
+      cursor:pointer;
+      transition:transform .08s ease, box-shadow .2s ease, filter .2s ease;
+      box-shadow:0 10px 20px rgba(91,53,38,.24);
+    }
+    button:hover{ filter:brightness(1.05); transform:translateY(-1px); }
+    button:active{ transform:translateY(0); }
+    .errorlist{
+      color:#b91c1c;
+      margin:0 0 8px 18px;
+      font-size:.9rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <div class="logo-wrap">
+        <img class="logo" src="{% static 'asistencia/img/logo-choux.jpeg' %}" alt="Logo Choux">
+      </div>
+      <h1>Control de Asistencia</h1>
+      <p>Ingresa con tu cuenta de administrador o encargado de sucursal.</p>
+
+      <form method="post">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        <label for="id_username">Usuario</label>
+        {{ form.username }}
+        <label for="id_password">Contraseña</label>
+        {{ form.password }}
+        <button type="submit">Entrar</button>
+      </form>
+    </div>
+  </div>
+</body>
+</html>
