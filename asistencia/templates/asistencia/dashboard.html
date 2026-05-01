@@ -283,9 +283,13 @@
             <label for="empleado_id_usuario">Empleado</label>
             <select id="empleado_id_usuario" name="empleado_id" required>
               <option value="">Selecciona...</option>
-              {% for e in empleados %}
+              {% if empleados_sin_cuenta %}
+              {% for e in empleados_sin_cuenta %}
               <option value="{{ e.id }}">{{ e.nombre }}</option>
               {% endfor %}
+              {% else %}
+              <option value="">No hay empleados sin cuenta</option>
+              {% endif %}
             </select>
           </div>
           <div>
@@ -298,6 +302,25 @@
           </div>
           <div>
             <button type="submit">Crear cuenta</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="card">
+        <h2>Eliminar empleado</h2>
+        <form method="post" action="{% url 'eliminar_empleado' %}" class="form-row">
+          {% csrf_token %}
+          <div>
+            <label for="empleado_id_eliminar">Empleado</label>
+            <select id="empleado_id_eliminar" name="empleado_id" required>
+              <option value="">Selecciona...</option>
+              {% for e in empleados %}
+              <option value="{{ e.id }}">{{ e.nombre }} - {{ e.sucursal.nombre|default:"Sin sucursal" }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div>
+            <button type="submit" class="btn-danger">Eliminar empleado</button>
           </div>
         </form>
       </div>

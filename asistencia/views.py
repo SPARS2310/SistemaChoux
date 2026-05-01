@@ -132,6 +132,8 @@ def dashboard(request):
     if rol != 'ADMIN':
         empleados = empleados.filter(sucursal_id=sucursal_restringida)
 
+    empleados_sin_cuenta = empleados.filter(usuario__isnull=True)
+
     sucursales = Sucursal.objects.filter(activa=True).order_by('nombre')
     if rol != 'ADMIN' and sucursal_restringida:
         sucursales = sucursales.filter(id=sucursal_restringida)
@@ -143,6 +145,7 @@ def dashboard(request):
             'ultimos': ultimos,
             'resumen': resumen,
             'empleados': empleados,
+            'empleados_sin_cuenta': empleados_sin_cuenta,
             'sucursales': sucursales,
             'fecha_desde': fecha_desde,
             'fecha_hasta': fecha_hasta,
