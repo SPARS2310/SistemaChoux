@@ -92,11 +92,9 @@ DATABASE_URL = os.getenv('DATABASE_URL', '').strip()
 if DATABASE_URL:
     # Si configuraste una base de datos PostgreSQL en Render
     parsed = urlparse(DATABASE_URL)
-    db_engine = 'django.db.backends.postgresql'
-    
     DATABASES = {
         'default': {
-            'ENGINE': db_engine,
+            'ENGINE': 'django.db.backends.postgresql',
             'NAME': parsed.path.lstrip('/'),
             'USER': parsed.username or '',
             'PASSWORD': parsed.password or '',
@@ -107,13 +105,11 @@ if DATABASE_URL:
         }
     }
 else:
-    # Si NO hay DATABASE_URL, usamos SQLite con tu DISCO PERSISTENTE
+    # Si NO hay DATABASE_URL, usamos SQLite (Persistente en Render o Local)
     if os.environ.get('RENDER'):
-        # Ruta en el servidor de Render (el disco de 1GB que creaste)
-        db_path = '/var/data/db.sqlite3'
+        db_path = '/opt/render/project/src/db.sqlite3'
     else:
-        # Ruta en tu computadora personal
-        db_path = BASE_DIR / 'db.sqlite3'
+        db_path = BASE_DIR / 'db.sqlite3' # Tu PC local
 
     DATABASES = {
         'default': {
@@ -121,7 +117,6 @@ else:
             'NAME': db_path,
         }
     }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators

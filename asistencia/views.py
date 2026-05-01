@@ -261,6 +261,34 @@ def crear_empleado_usuario(request):
 
 
 @login_required
+def eliminar_empleado(request):
+    if request.method != 'POST':
+        return HttpResponseBadRequest('Solo POST')
+
+    rol, sucursal_id = _get_contexto_usuario(request.user)
+    if rol not in ('ADMIN', 'ENCARGADO'):
+        return HttpResponseBadRequest('No autorizado')
+
+    empleado_id = request.POST.get('empleado_id')
+    if not empleado_id:
+        return HttpResponseBadRequest('Faltan datos')
+
+    empleado = get_object_or_404(Empleado, id=empleado_id)
+
+    if rol == 'ENCARGADO' and (not sucursal_id or empleado.sucursal_id != sucursal_id):
+        return HttpResponseBadRequest('No autorizado para este empleado')
+
+    perfil_empleado = PerfilUsuario.objects.filter(empleado=empleado).first()
+    if perfil_empleado:
+        user = perfil_empleado.user
+        perfil_empleado.delete()
+        user.delete()
+
+    empleado.delete()
+    return redirect('dashboard')
+
+
+@login_required
 def mover_empleado_sucursal(request):
     if request.method != 'POST':
         return HttpResponseBadRequest('Solo POST')
