@@ -88,10 +88,14 @@ class CustomLoginView(LoginView):
     """Vista de login personalizada que redirije según el rol del usuario."""
     template_name = 'asistencia/login.html'
     redirect_authenticated_user = True
-    
+
     def get_success_url(self):
-        perfil = getattr(self.request.user, 'perfil', None)
-        if perfil and perfil.rol == 'EMPLEADO':
+        try:
+            perfil = getattr(self.request.user, 'perfil', None)
+        except Exception:
+            perfil = None
+
+        if perfil and getattr(perfil, 'rol', None) == 'EMPLEADO':
             return reverse_lazy('mi_asistencia')
         return reverse_lazy('dashboard')
 

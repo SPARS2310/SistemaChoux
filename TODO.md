@@ -1,9 +1,10 @@
-# TODO - Arreglar logo `logo-choux.jpeg`
+# TODO - Diagnóstico error 500 en `/login/`
 
-- [x] Revisar templates (`login.html`, `dashboard.html`) y confirmar uso de `{% static %}`.
-- [x] Revisar `settings.py` para configuración de archivos estáticos.
-- [x] Verificar archivo físico del logo y nombre/extensión exactos.
-- [x] Ajustar configuración estática en `settings.py` para desarrollo/producción.
-- [ ] Validar que el logo cargue correctamente.
-- [ ] Agregar fallback en template para detectar error de carga del logo.
-- [ ] Verificar `DEBUG`/`ALLOWED_HOSTS` en entorno de deploy para servir estáticos correctamente.
+- [x] Revisar archivos clave (`settings.py`, `urls.py`, `views.py`, `models.py`).
+- [x] Intentar correr validación local (`python manage.py check`) para capturar error.
+- [ ] Configurar/activar entorno virtual local para poder ejecutar Django.
+- [x] Revisar logs de Render para obtener traceback exacto del 500 en producción.
+- [x] Cambiar deploy command en `Procfile` a ASGI (`daphne`) para compatibilidad con Channels.
+- [x] Agregar logging en `settings.py` para ver traceback real en Render.
+- [x] Endurecer login (`CustomLoginView`) para evitar fallo por usuarios sin perfil.
+- [ ] Verificar que `/login/` responda sin 500.

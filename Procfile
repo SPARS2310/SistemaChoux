@@ -1,1 +1,1 @@
-web: gunicorn control_asistencia.wsgi:application
+web: daphne control_asistencia.asgi:application -b 0.0.0.0 -p $PORT
