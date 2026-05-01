@@ -87,15 +87,13 @@ ASGI_APPLICATION = 'control_asistencia.asgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
-
 DATABASE_URL = os.getenv('DATABASE_URL', '').strip()
 
 if DATABASE_URL:
+    # Si configuraste una base de datos PostgreSQL en Render
     parsed = urlparse(DATABASE_URL)
     db_engine = 'django.db.backends.postgresql'
-    if parsed.scheme in ('postgres', 'postgresql'):
-        db_engine = 'django.db.backends.postgresql'
-
+    
     DATABASES = {
         'default': {
             'ENGINE': db_engine,
@@ -105,14 +103,22 @@ if DATABASE_URL:
             'HOST': parsed.hostname or '',
             'PORT': str(parsed.port or ''),
             'CONN_MAX_AGE': int(os.getenv('DB_CONN_MAX_AGE', '600')),
-            'OPTIONS': {'sslmode': 'require'} if os.getenv('DB_SSLMODE', 'require') else {},
+            'OPTIONS': {'sslmode': 'require'},
         }
     }
 else:
+    # Si NO hay DATABASE_URL, usamos SQLite con tu DISCO PERSISTENTE
+    if os.environ.get('RENDER'):
+        # Ruta en el servidor de Render (el disco de 1GB que creaste)
+        db_path = '/var/data/db.sqlite3'
+    else:
+        # Ruta en tu computadora personal
+        db_path = BASE_DIR / 'db.sqlite3'
+
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
+            'NAME': db_path,
         }
     }
 
