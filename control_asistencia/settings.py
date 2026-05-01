@@ -28,6 +28,9 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-dev-key-change-me')
 DEBUG = os.getenv('DEBUG', 'False').lower() == 'true'
 
 ALLOWED_HOSTS = ['choux-control.onrender.com', 'localhost', '127.0.0.1', '.onrender.com']
+if os.getenv('ALLOW_TESTSERVER', 'False').lower() == 'true':
+    ALLOWED_HOSTS.append('testserver')
+
 RENDER_EXTERNAL_HOSTNAME = os.getenv('RENDER_EXTERNAL_HOSTNAME')
 if RENDER_EXTERNAL_HOSTNAME and RENDER_EXTERNAL_HOSTNAME not in ALLOWED_HOSTS:
     ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
