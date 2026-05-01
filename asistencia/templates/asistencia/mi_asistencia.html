@@ -177,15 +177,13 @@
         <div class="stat-card">
           <div class="stat-label">Faltas</div>
           <div class="stat-value">
-            {% widthratio resumen|dictsort:"es_falta"|length resumen|length 100 as falta_count %}
-            {{ falta_count }}
+            {{ faltas }}
           </div>
         </div>
         <div class="stat-card">
           <div class="stat-label">Días de descanso</div>
           <div class="stat-value">
-            {% widthratio resumen|dictsort:"es_dia_descanso"|length resumen|length 100 as descanso_count %}
-            {{ descanso_count }}
+            {{ dias_descanso }}
           </div>
         </div>
         <div class="stat-card">

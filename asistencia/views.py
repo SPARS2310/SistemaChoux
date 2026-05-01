@@ -466,6 +466,8 @@ def mi_asistencia(request):
         })
     
     ultimos = registros[:10]
+    faltas = sum(1 for r in resumen if r['es_falta'] and not r['es_dia_descanso'])
+    dias_descanso = sum(1 for r in resumen if r['es_dia_descanso'])
     
     return render(
         request,
@@ -476,6 +478,8 @@ def mi_asistencia(request):
             'ultimos': ultimos,
             'fecha_desde': fecha_desde,
             'fecha_hasta': fecha_hasta,
+            'faltas': faltas,
+            'dias_descanso': dias_descanso,
         }
     )
 
