@@ -9,6 +9,7 @@ from .views import (
     crear_encargado,
     CustomLoginView,
     dashboard,
+    eliminar_empleado,
     mover_empleado_sucursal,
     mi_asistencia,
     rfid_event,
@@ -24,6 +25,7 @@ urlpatterns = [
     path('crear-empleado/', crear_empleado, name='crear_empleado'),
     path('crear-empleado-usuario/', crear_empleado_usuario, name='crear_empleado_usuario'),
     path('crear-encargado/', crear_encargado, name='crear_encargado'),
+    path('eliminar-empleado/', eliminar_empleado, name='eliminar_empleado'),
     path('mover-empleado-sucursal/', mover_empleado_sucursal, name='mover_empleado_sucursal'),
     path('api/rfid-event/', rfid_event, name='rfid_event'),
 ]

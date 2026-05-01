@@ -1,10 +1,7 @@
-# TODO - Diagnóstico error 500 en `/login/`
+# TODO - Ajustes de gestión de empleados
 
-- [x] Revisar archivos clave (`settings.py`, `urls.py`, `views.py`, `models.py`).
-- [x] Intentar correr validación local (`python manage.py check`) para capturar error.
-- [ ] Configurar/activar entorno virtual local para poder ejecutar Django.
-- [x] Revisar logs de Render para obtener traceback exacto del 500 en producción.
-- [x] Cambiar deploy command en `Procfile` a ASGI (`daphne`) para compatibilidad con Channels.
-- [x] Agregar logging en `settings.py` para ver traceback real en Render.
-- [x] Endurecer login (`CustomLoginView`) para evitar fallo por usuarios sin perfil.
-- [ ] Verificar que `/login/` responda sin 500.
+- [x] Revisar archivos clave (`asistencia/views.py`, `asistencia/urls.py`, `asistencia/models.py`).
+- [x] Exponer correctamente la ruta para eliminar empleado (ADMIN/ENCARGADO).
+- [x] Validar en creación de usuario de empleado que no exista ya una cuenta vinculada.
+- [x] Verificar consistencia de permisos en eliminación.
+- [ ] Confirmar cambios en repo.

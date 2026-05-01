@@ -246,10 +246,14 @@ def crear_empleado_usuario(request):
         return HttpResponseBadRequest('Faltan datos')
 
     empleado = get_object_or_404(Empleado, id=empleado_id)
-    
+
     # Verificar permisos
     if rol == 'ENCARGADO' and (not sucursal_id or empleado.sucursal_id != sucursal_id):
         return HttpResponseBadRequest('No autorizado para este empleado')
+
+    # Evitar múltiples cuentas para el mismo empleado
+    if PerfilUsuario.objects.filter(empleado=empleado).exists():
+        return HttpResponseBadRequest('Este empleado ya tiene cuenta de usuario')
 
     try:
         user = User.objects.create_user(username=username, password=password)
