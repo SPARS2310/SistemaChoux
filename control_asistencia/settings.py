@@ -89,10 +89,13 @@ ASGI_APPLICATION = 'control_asistencia.asgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
+# Database
+# https://docs.djangoproject.com/en/6.0/ref/settings/#databases
+
 DATABASE_URL = os.getenv('DATABASE_URL', '').strip()
 
 if DATABASE_URL:
-    # Si configuraste una base de datos PostgreSQL en Render
+    # Si en el futuro decides usar PostgreSQL en Render
     parsed = urlparse(DATABASE_URL)
     DATABASES = {
         'default': {
@@ -107,18 +110,20 @@ if DATABASE_URL:
         }
     }
 else:
-    # Si NO hay DATABASE_URL, usamos SQLite (Persistente en Render o Local)
+    # Configuración para el disco persistente que ya pagaste
     if os.environ.get('RENDER'):
-        db_path = '/opt/render/project/src/db.sqlite3'
+        # Ruta exacta según tu "Mount Path" en Render
+        db_path = '/var/data/db.sqlite3'
     else:
-        db_path = BASE_DIR / 'db.sqlite3' # Tu PC local
+        # Ruta para tu computadora local
+        db_path = BASE_DIR / 'db.sqlite3'
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': '/data/db.sqlite3',  # Ahora el archivo vive en el disco persistente
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': db_path,
+        }
     }
-}
 
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
