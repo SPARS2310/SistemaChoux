@@ -274,6 +274,35 @@
       {% endif %}
     </div>
 
+    <div class="grid">
+      <div class="card">
+        <h2>Crear cuenta de empleado</h2>
+        <form method="post" action="{% url 'crear_empleado_usuario' %}" class="form-row">
+          {% csrf_token %}
+          <div>
+            <label for="empleado_id_usuario">Empleado</label>
+            <select id="empleado_id_usuario" name="empleado_id" required>
+              <option value="">Selecciona...</option>
+              {% for e in empleados %}
+              <option value="{{ e.id }}">{{ e.nombre }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div>
+            <label for="username_empleado">Usuario</label>
+            <input type="text" id="username_empleado" name="username" required>
+          </div>
+          <div>
+            <label for="password_empleado">Contraseña</label>
+            <input type="password" id="password_empleado" name="password" required>
+          </div>
+          <div>
+            <button type="submit">Crear cuenta</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
     {% if rol == 'ADMIN' %}
     <div class="grid">
       <div class="card">

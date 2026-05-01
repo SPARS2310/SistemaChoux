@@ -41,11 +41,13 @@ class PerfilUsuario(models.Model):
     ROL_CHOICES = (
         ('ADMIN', 'Administrador'),
         ('ENCARGADO', 'Encargado de sucursal'),
+        ('EMPLEADO', 'Empleado'),
     )
 
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='perfil')
     rol = models.CharField(max_length=12, choices=ROL_CHOICES, default='ENCARGADO')
     sucursal = models.ForeignKey(Sucursal, on_delete=models.PROTECT, null=True, blank=True, related_name='encargados')
+    empleado = models.OneToOneField(Empleado, on_delete=models.CASCADE, null=True, blank=True, related_name='usuario')
 
     def __str__(self):
         return f"{self.user.username} - {self.rol}"
